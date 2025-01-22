@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] List<Road> _roads = new List<Road>();
-    [SerializeField] float waitTime = 1.0f;
+    [SerializeField] [Range(1.0f, 5.0f)] float enemySpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +18,28 @@ public class EnemyMovement : MonoBehaviour
     {
         foreach (Road road in _roads)
         {
-            // Set the position of the enemy to the position of
-            // the current road in the foreach loop
-            transform.position = road.transform.position;
+            // Enemy position
+            Vector3 startPos = transform.position;
+            // Give the end position the start position's y
+            // because we dont want to interpolate on the y axis.
+            Vector3 endPos = new Vector3(road.transform.position.x, 
+                                         startPos.y, 
+                                         road.transform.position.z);
+            float time = 0.0f;
 
-            // Go back to Start for one sec, then come back in the
-            // loop and print the next road name
-            yield return new WaitForSeconds(waitTime);
+
+
+            // Linear interpolate the enemy position to smoothen
+            // movement between tiles.
+            while (time < 1.0f)
+            {
+                // Every frame we update the time to travel between
+                // the start position and end position
+                time += Time.deltaTime * enemySpeed;
+                transform.position = Vector3.Lerp(startPos, endPos, time);
+
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 
