@@ -97,6 +97,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_CornerRoad
       objectReference: {fileID: 0}
+    - target: {fileID: 5528248833206769462, guid: 3b5c6b36403951b44a7f7b1fd103ebc3, type: 3}
+      propertyPath: isPlaceable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8240514901053092682, guid: 3b5c6b36403951b44a7f7b1fd103ebc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

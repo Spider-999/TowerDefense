@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Road : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject cannonPrefab;
+    [SerializeField] bool isPlaceable;
+    [SerializeField] float cannonSpawnY;
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseDown()
     {
-        
+        if (isPlaceable)
+        {
+            var cannonSpawnLocation = new Vector3(transform.position.x, cannonSpawnY, transform.position.z);
+            // Instantiate a cannon tower to the specified spawn location
+            Instantiate(cannonPrefab,cannonSpawnLocation,Quaternion.identity);
+            // Make the tile non placeble if it is occupied already
+            isPlaceable = false;
+            // Log the tile location
+            Debug.Log(transform.name);
+        }
     }
 }
