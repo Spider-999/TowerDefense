@@ -109,8 +109,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4278255360
+  m_fontColor: {r: 0, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a315ecbfdec2b714ebcc7ed12f729105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canPlaceTower: {r: 0, g: 1, b: 0, a: 1}
+  _cantPlaceTower: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1667729982304804497
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,9 +317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0fed2d7f7a1c041b7888c6687a5652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonPrefab: {fileID: 5907216339790506152, guid: 6a2b9c046c2a0394ba8e0e6cf90f2813, type: 3}
-  isPlaceable: 1
-  cannonSpawnY: -2.5
+  _cannonPrefab: {fileID: 5907216339790506152, guid: 6a2b9c046c2a0394ba8e0e6cf90f2813, type: 3}
+  _cannonSpawnY: 0
+  _isPlaceable: 1
 --- !u!65 &786948195448149761
 BoxCollider:
   m_ObjectHideFlags: 0

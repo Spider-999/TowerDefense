@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Road : MonoBehaviour
 {
-    [SerializeField] GameObject cannonPrefab;
-    [SerializeField] bool isPlaceable;
-    [SerializeField] float cannonSpawnY;
+    [SerializeField] private GameObject _cannonPrefab;
+    [SerializeField] private float _cannonSpawnY;
+    [SerializeField] private bool _isPlaceable = true;
+
+    #region Properties
+    public bool IsPlaceable
+    {
+        get => _isPlaceable;
+        set => _isPlaceable = value;
+    }
+    #endregion
 
     private void OnMouseDown()
     {
-        if (isPlaceable)
+        if (IsPlaceable)
         {
-            var cannonSpawnLocation = new Vector3(transform.position.x, cannonSpawnY, transform.position.z);
+            var cannonSpawnLocation = new Vector3(transform.position.x, _cannonSpawnY, transform.position.z);
             // Instantiate a cannon tower to the specified spawn location
-            Instantiate(cannonPrefab,cannonSpawnLocation,Quaternion.identity);
+            Instantiate(_cannonPrefab,cannonSpawnLocation,Quaternion.identity);
             // Make the tile non placeble if it is occupied already
-            isPlaceable = false;
+            IsPlaceable = false;
             // Log the tile location
             Debug.Log(transform.name);
         }
