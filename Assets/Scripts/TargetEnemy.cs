@@ -21,5 +21,9 @@ public class TargetEnemy : MonoBehaviour
     {
         // Rotate the cannon to face the enemy
         transform.LookAt(_enemyTarget);
+
+        // Find a new enemy if the target got destroyed
+        if (_enemyTarget == null)
+            _enemyTarget = FindObjectOfType<EnemyMovement>().transform;
     }
 }
