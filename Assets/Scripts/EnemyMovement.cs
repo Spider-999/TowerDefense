@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         FindAndBuildPath();
+        ReturnToBeginning();
         StartCoroutine(FollowRoad());
     }
 
@@ -29,8 +30,18 @@ public class EnemyMovement : MonoBehaviour
             _roads.Add(road.GetComponent<Road>());
     }
 
-        // Coroutine
-        IEnumerator FollowRoad()
+    void ReturnToBeginning()
+    {
+        // Get the first road from the road list.
+        Vector3 firstRoad = _roads.First().transform.position;
+
+        // Place the enemy at the beginning of the road.
+        // Keep the y position of the enemy the same.
+        transform.position = new Vector3(firstRoad.x, transform.position.y, firstRoad.z);
+    }
+
+    // Coroutine
+    IEnumerator FollowRoad()
     {
         foreach (Road road in _roads)
         {
@@ -57,6 +68,8 @@ public class EnemyMovement : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+        // Delete the enemy when it reaches the end of the road.
+        Destroy(gameObject);
     }
 
 }
