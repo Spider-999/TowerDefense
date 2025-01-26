@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 5474389793432934346}
   - component: {fileID: 3971248770381189328}
   - component: {fileID: 9178695059945112597}
+  - component: {fileID: 6225280310745671779}
   m_Layer: 0
   m_Name: RedEnemy
   m_TagString: Untagged
@@ -164,7 +165,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemySpeed: 1
+  _enemySpeed: 1
 --- !u!114 &9178695059945112597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,3 +179,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
+  _currentHealth: 0
+--- !u!114 &6225280310745671779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771544567243502984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125d8c8ebbdfa4946b621f92eae8fb6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

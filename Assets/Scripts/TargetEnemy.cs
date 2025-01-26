@@ -5,25 +5,57 @@ using UnityEngine;
 public class TargetEnemy : MonoBehaviour
 {
     private Transform _enemyTarget;
-    
-    void Start()
+    [SerializeField] ParticleSystem _projectileParticle;
+    [SerializeField] private float _towerRange = 20f;
+
+    private void Update()
     {
-        // Find the enemy object
-        _enemyTarget = FindObjectOfType<EnemyMovement>().transform;
+        FindClosestEnemy();
+        AimTower();
     }
 
-    void Update()
+    private void FindClosestEnemy()
     {
-        AimTower();
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Transform closestEnemy = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach(Enemy enemy in enemies)
+        {
+            // Find the distance from the tower to the enemy
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            // Compare the distance to the shortest distance
+            if (distanceToEnemy < shortestDistance)
+            {
+                shortestDistance = distanceToEnemy;
+                closestEnemy = enemy.transform;
+            }
+        }
+
+        _enemyTarget = closestEnemy;
     }
 
     private void AimTower()
     {
+        float enemyDistance = Vector3.Distance(transform.position, _enemyTarget.position);
+
+        // If the enemy is not in the range of the tower
+        // do nothing.
+        if(enemyDistance > _towerRange)
+        {
+            _enemyTarget = null;
+            Attack(false);
+            return;
+        }
+
         // Rotate the cannon to face the enemy
         transform.LookAt(_enemyTarget);
+        Attack(true);
+    }
 
-        // Find a new enemy if the target got destroyed
-        if (_enemyTarget == null)
-            _enemyTarget = FindObjectOfType<EnemyMovement>().transform;
+    private void Attack(bool isActive)
+    {
+        var emission = _projectileParticle.emission;
+        emission.enabled = isActive;
     }
 }
