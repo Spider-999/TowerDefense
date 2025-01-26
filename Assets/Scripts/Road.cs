@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Road : MonoBehaviour
 {
-    [SerializeField] private GameObject _cannonPrefab;
+    [SerializeField] private Tower _cannonPrefab;
     [SerializeField] private float _cannonSpawnY;
     [SerializeField] private bool _isPlaceable = true;
 
@@ -20,11 +20,17 @@ public class Road : MonoBehaviour
     {
         if (IsPlaceable)
         {
-            var cannonSpawnLocation = new Vector3(transform.position.x, _cannonSpawnY, transform.position.z);
-            // Instantiate a cannon tower to the specified spawn location
-            Instantiate(_cannonPrefab,cannonSpawnLocation,Quaternion.identity);
+            Vector3 cannonSpawnLocation = new Vector3(transform.position.x, _cannonSpawnY, transform.position.z);
+            bool isPlaced;
+
+            // Place a cannon tower to the specified spawn location
+            // if the player has enough currency to place the tower
+            isPlaced = _cannonPrefab.PlaceTower(_cannonPrefab, cannonSpawnLocation);
+
             // Make the tile non placeble if it is occupied already
-            IsPlaceable = false;
+            // and if the player had enough currency to place the tower
+            IsPlaceable = !isPlaced;
+
             // Log the tile location
             Debug.Log(transform.name);
         }

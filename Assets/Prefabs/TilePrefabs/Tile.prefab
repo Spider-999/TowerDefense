@@ -87,7 +87,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849242045854024673}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0fed2d7f7a1c041b7888c6687a5652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cannonPrefab: {fileID: 5907216339790506152, guid: 6a2b9c046c2a0394ba8e0e6cf90f2813, type: 3}
+  _cannonPrefab: {fileID: 8283940002050643271, guid: 6a2b9c046c2a0394ba8e0e6cf90f2813, type: 3}
   _cannonSpawnY: 0
   _isPlaceable: 1
 --- !u!65 &786948195448149761

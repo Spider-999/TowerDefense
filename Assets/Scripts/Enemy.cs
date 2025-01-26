@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     {
         if (_currency == null)
         {
-            Debug.LogError("Currency is null");
+            Debug.Log("Currency is null");
             return;
         }
 
@@ -31,10 +31,10 @@ public class Enemy : MonoBehaviour
     {
         if (_currency == null)
         {
-            Debug.LogError("Currency is null");
+            Debug.Log("Currency is null");
             return;
         }
 
-        _currency.WithdrawCurrency(_currencyDropValue);
+        _currency.WithdrawCurrency(_currencyLoseValue);
     }
 }

@@ -4926,6 +4926,7 @@ GameObject:
   - component: {fileID: 7862914204660399543}
   - component: {fileID: 5402729137967663485}
   - component: {fileID: 5799236905511950334}
+  - component: {fileID: 8283940002050643271}
   m_Layer: 0
   m_Name: CannonTower
   m_TagString: Untagged
@@ -5015,6 +5016,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectileParticle: {fileID: 6581815889091892977}
   _towerRange: 15
+--- !u!114 &8283940002050643271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907216339790506152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee6fa750f1e52146861de5d38165602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towerCost: 50
 --- !u!1 &7118631743437412058
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,6 +37,12 @@ public class TargetEnemy : MonoBehaviour
 
     private void AimTower()
     {
+        if(_enemyTarget == null)
+        {
+            Attack(false);
+            return;
+        }
+
         float enemyDistance = Vector3.Distance(transform.position, _enemyTarget.position);
 
         // If the enemy is not in the range of the tower

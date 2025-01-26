@@ -21,9 +21,9 @@ public class Currency : MonoBehaviour
 
     public void AddCurrency(int amount)
     {
-        if (amount < 0)
+        if (amount <= 0)
         {
-            Debug.LogError("Cannot add negative currency");
+            Debug.Log("Cannot add negative or no currency");
             return;
         }
 
@@ -34,13 +34,13 @@ public class Currency : MonoBehaviour
     {
         if(amount <= 0)
         {
-            Debug.LogError("Cannot withdraw negative or no currency");
+            Debug.Log("Cannot withdraw negative or no currency");
             return;
         }
 
         if(amount > _currentCurrency)
         {
-            Debug.LogError("Not enough currency to withdraw");
+            Debug.Log("Not enough currency to withdraw");
             return;
         }
 
