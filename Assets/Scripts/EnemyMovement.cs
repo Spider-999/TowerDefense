@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private List<Road> _roads = new List<Road>();
     [SerializeField] [Range(1.0f, 5.0f)] private float _enemySpeed = 1.0f;
+    private Enemy _enemy;
 
     // This method is called when the script instance is being loaded.
     private void Awake()
@@ -17,6 +18,11 @@ public class EnemyMovement : MonoBehaviour
          * only once in the Awake method for more efficient resource usage.
         */
         FindAndBuildPath();
+    }
+
+    private void Start()
+    {
+        _enemy = GetComponent<Enemy>();
     }
 
     // This method is called when the object becomes enabled and active.
@@ -81,6 +87,9 @@ public class EnemyMovement : MonoBehaviour
         // Instead of destroying the enemy, we can just disable it
         // and set it dormant in the object pool until it is needed again.
         gameObject.SetActive(false);
+
+        // The player loses money when the enemy reaches the end
+        _enemy.LoseCurrency();
     }
 
 }
