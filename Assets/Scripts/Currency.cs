@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Currency : MonoBehaviour
 {
     [SerializeField] private int _startCurrency = 100;
     [SerializeField] private int _currentCurrency;
+    [SerializeField] private TextMeshProUGUI _currencyText;
 
     #region Properties
     public int CurrentCurrency
@@ -17,6 +19,13 @@ public class Currency : MonoBehaviour
     private void Awake()
     {
         _currentCurrency = _startCurrency;
+        UpdateCurrencyText();
+    }
+
+
+    private void UpdateCurrencyText()
+    {
+        _currencyText.text = $"Currency: {CurrentCurrency}";
     }
 
     public void AddCurrency(int amount)
@@ -28,6 +37,7 @@ public class Currency : MonoBehaviour
         }
 
         _currentCurrency += amount;
+        UpdateCurrencyText();
     }
 
     public void WithdrawCurrency(int amount)
@@ -45,5 +55,6 @@ public class Currency : MonoBehaviour
         }
 
         _currentCurrency -= amount;
+        UpdateCurrencyText();
     }
 }

@@ -61,6 +61,7 @@ public class TargetEnemy : MonoBehaviour
 
     private void Attack(bool isActive)
     {
+        // Enable or disable the particle system based on the isActive parameter
         var emission = _projectileParticle.emission;
         emission.enabled = isActive;
     }

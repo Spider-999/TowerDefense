@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // The amount a player will receive when the enemy is killed
-    [SerializeField] private int _currencyDropValue = 10;
+    [SerializeField] private int _currencyDropValue = 25;
     // The amount a player will lose when the enemy reaches the end
     [SerializeField] private int _currencyLoseValue = 10;
     private Currency _currency;
