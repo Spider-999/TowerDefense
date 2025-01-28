@@ -8,6 +8,7 @@ public class Currency : MonoBehaviour
     [SerializeField] private int _startCurrency = 100;
     [SerializeField] private int _currentCurrency;
     [SerializeField] private TextMeshProUGUI _currencyText;
+    private TextSystem _textSystem;
 
     #region Properties
     public int CurrentCurrency
@@ -19,13 +20,12 @@ public class Currency : MonoBehaviour
     private void Awake()
     {
         _currentCurrency = _startCurrency;
-        UpdateCurrencyText();
     }
 
-
-    private void UpdateCurrencyText()
+    private void Start()
     {
-        _currencyText.text = $"Currency: {CurrentCurrency}";
+        _textSystem = FindObjectOfType<TextSystem>();
+        _textSystem.UpdateCurrencyText(_currentCurrency);
     }
 
     public void AddCurrency(int amount)
@@ -37,7 +37,7 @@ public class Currency : MonoBehaviour
         }
 
         _currentCurrency += amount;
-        UpdateCurrencyText();
+        _textSystem.UpdateCurrencyText(_currentCurrency);
     }
 
     public void WithdrawCurrency(int amount)
@@ -55,6 +55,6 @@ public class Currency : MonoBehaviour
         }
 
         _currentCurrency -= amount;
-        UpdateCurrencyText();
+        _textSystem.UpdateCurrencyText(_currentCurrency);
     }
 }

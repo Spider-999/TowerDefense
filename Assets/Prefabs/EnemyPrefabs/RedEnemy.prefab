@@ -179,7 +179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
-  _currentHealth: 0
+  _increaseHealth: 1
+  _enemiesKilled: 0
+  _towerDamage: 20
 --- !u!114 &6225280310745671779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,3 +194,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125d8c8ebbdfa4946b621f92eae8fb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currencyDropValue: 25
+  _currencyLoseValue: 10

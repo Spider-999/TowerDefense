@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _currency = FindObjectOfType<Currency>();
+        _currency = FindObjectOfType<Currency>();   
     }
 
     public void RewardCurrency()
