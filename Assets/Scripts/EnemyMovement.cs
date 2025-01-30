@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private List<Road> _roads = new List<Road>();
@@ -42,8 +43,13 @@ public class EnemyMovement : MonoBehaviour
 
         // Loop through all the children of the parentRoad
         // and add them to the _roads list to build the level's road.
-        foreach (Transform road in parentRoad.transform)
-            _roads.Add(road.GetComponent<Road>());
+        foreach (Transform childRoad in parentRoad.transform)
+        {
+            Road road = childRoad.GetComponent<Road>();
+
+            if(road != null)
+                _roads.Add(road);
+        }
     }
 
     private void ReturnToBeginning()
@@ -54,6 +60,16 @@ public class EnemyMovement : MonoBehaviour
         // Place the enemy at the beginning of the road.
         // Keep the y position of the enemy the same.
         transform.position = new Vector3(firstRoad.x, transform.position.y, firstRoad.z);
+    }
+
+    void FinishRoadFollow()
+    {
+        // Instead of destroying the enemy, we can just disable it
+        // and set it dormant in the object pool until it is needed again.
+        gameObject.SetActive(false);
+
+        // The player loses money when the enemy reaches the end
+        _enemy.LoseCurrency();
     }
 
     // Coroutine
@@ -84,12 +100,8 @@ public class EnemyMovement : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
-        // Instead of destroying the enemy, we can just disable it
-        // and set it dormant in the object pool until it is needed again.
-        gameObject.SetActive(false);
 
-        // The player loses money when the enemy reaches the end
-        _enemy.LoseCurrency();
+        FinishRoadFollow();
     }
 
 }

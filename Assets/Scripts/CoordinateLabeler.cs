@@ -5,6 +5,7 @@ using TMPro;
 
 // This makes sure the script runs always, even in edit mode.
 [ExecuteAlways]
+[RequireComponent(typeof(TextMeshPro))]
 public class CoordinateLabeler : MonoBehaviour
 {
     private TextMeshPro _label;
@@ -52,6 +53,7 @@ public class CoordinateLabeler : MonoBehaviour
         transform.parent.name = _position.ToString();
     }
 
+    // Change the color of the coordinate label based on the road's placeable status
     void ColorCoordinates()
     {
         if(_road.IsPlaceable)
