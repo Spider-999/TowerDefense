@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cannonPrefab: {fileID: 8283940002050643271, guid: 6a2b9c046c2a0394ba8e0e6cf90f2813, type: 3}
-  _cannonSpawnY: 0
+  _cannonSpawnY: -2.5
   _isPlaceable: 1
 --- !u!65 &786948195448149761
 BoxCollider:

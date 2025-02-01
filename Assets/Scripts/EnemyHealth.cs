@@ -34,10 +34,7 @@ public class EnemyHealth : MonoBehaviour
         ProjectileHit();
     }
 
-    private void UpdateHealthBar()
-    {
-        _healthBar.fillAmount = (float)_currentHealth / _healthPercentImage;
-    }
+    private void UpdateHealthBar() => _healthBar.fillAmount = (float)_currentHealth / _healthPercentImage;
 
     private void ResetHealthBar()
     {
