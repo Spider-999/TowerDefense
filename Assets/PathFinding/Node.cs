@@ -14,7 +14,7 @@ public class Node
     public Vector2Int GridPosition;
     public bool IsWalkable;
     public bool IsExplored;
-    public bool IsPath;
+    public bool IsRoad;
     public Node NextNode;
     #endregion
 
