@@ -2993,7 +2993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startCoordinates: {x: 0, y: 0}
-  _endCoordinates: {x: 3, y: 2}
+  _endCoordinates: {x: 4, y: 4}
 --- !u!1001 &1570423861
 PrefabInstance:
   m_ObjectHideFlags: 0

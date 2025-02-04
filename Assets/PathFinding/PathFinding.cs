@@ -23,15 +23,16 @@ public class PathFinding : MonoBehaviour
 
         if (_gridManager != null)
             _grid = _gridManager.Grid;
-
-        // The first node and end node are walkable
-        _startNode = new Node(_startCoordinates, true);
-        _endNode = new Node(_endCoordinates, true);
     }
 
     void Start()
     {
+        // Get the start and end nodes from the grid dictionary in the 
+        // grid manager using the start and end coordinates
+        _startNode = _gridManager.Grid[_startCoordinates];
+        _endNode = _gridManager.Grid[_endCoordinates];
         BFS();
+        BuildRoad();
     }
 
     private void ExploreNeighborNodes()
@@ -46,15 +47,18 @@ public class PathFinding : MonoBehaviour
             {
                 // Add the neighbor node to the list
                 neighborNodes.Add(_grid[neighborNodeCoordinates]);
-                
+
             }
         }
 
-        foreach(Node neighborNode in neighborNodes)
+        foreach (Node neighborNode in neighborNodes)
         {
             // Check if the neighbor node has not been explored and is walkable
             if (!_explored.ContainsKey(neighborNode.GridPosition) && neighborNode.IsWalkable)
             {
+                // Add the next node to the neighbor node
+                // to create a tree structure
+                neighborNode.NextNode = _currentSearchNode;
                 // Add the neighbor node to the queue
                 _frontNodes.Enqueue(neighborNode);
                 _explored.Add(neighborNode.GridPosition, neighborNode);
@@ -74,11 +78,33 @@ public class PathFinding : MonoBehaviour
             _currentSearchNode.IsExplored = true;
             ExploreNeighborNodes();
 
-            if(_currentSearchNode.GridPosition == _endCoordinates)
+            if (_currentSearchNode.GridPosition == _endCoordinates)
             {
                 Debug.Log("Road Found");
                 break;
-            }   
+            }
         }
+    }
+
+    public List<Node> BuildRoad()
+    {
+        List<Node> road = new List<Node>();
+        Node currentNode = _endNode;
+
+        // Add the end node to the road list
+        road.Add(currentNode);
+        currentNode.IsRoad = true;
+
+        // Build the road from the end node to the start node
+        while (currentNode.NextNode != null)
+        {
+            currentNode = currentNode.NextNode;
+            road.Add(currentNode);
+            currentNode.IsRoad = true;
+        }
+
+        // Reverse the road list to get the correct order
+        road.Reverse();
+        return road;
     }
 }
