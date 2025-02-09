@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Road : MonoBehaviour
+public class Tile : MonoBehaviour
 {
     [SerializeField] private Tower _cannonPrefab;
     [SerializeField] private float _cannonSpawnY;
-    [SerializeField] private bool _isPlaceable = true;
+    [SerializeField] private bool _isPlaceable;
+    private GridManager _gridManager;
+    private Vector2Int _coordinates = new Vector2Int();
 
     #region Properties
     public bool IsPlaceable
@@ -15,6 +17,21 @@ public class Road : MonoBehaviour
         set => _isPlaceable = value;
     }
     #endregion
+
+    private void Awake()
+    {
+        _gridManager = FindObjectOfType<GridManager>();
+    }
+
+    private void Start()
+    {
+        if(_gridManager != null)
+        {
+            _coordinates = _gridManager.GetCoordinatesFromPosition(transform.position);
+            if (!_isPlaceable)
+                _gridManager.SetNonWalkableNode(_coordinates);
+        }
+    }
 
     private void OnMouseDown()
     {

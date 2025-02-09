@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
+    // Matches the Unity editor settings for the grid size
+    [SerializeField] private int _unityGridSize = 10;
     [SerializeField] private Vector2Int _gridSize = new Vector2Int(10,10);
     private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
 
@@ -12,6 +15,12 @@ public class GridManager : MonoBehaviour
     {
         get => _grid;
     }
+
+    public int UnityGridSize
+    {
+        get => _unityGridSize;
+    }
+
 
     public Node GetNode(Vector2Int gridPosition)
     {
@@ -22,10 +31,35 @@ public class GridManager : MonoBehaviour
         return null;
     }
     #endregion
-
     private void Awake()
     {
         InitializeGrid();
+    }
+
+    public void SetNonWalkableNode(Vector2Int coordinates)
+    {
+        if (_grid.ContainsKey(coordinates))
+        {
+            // Debug.Log("Setting non placeable node at: " + coordinates);
+            _grid[coordinates].IsPlaceable = false;
+        }
+    }
+
+    public Vector2Int GetCoordinatesFromPosition(Vector3 position)
+    {
+        Vector2Int coordinates = new Vector2Int();
+        coordinates.x = Mathf.RoundToInt(position.x / _unityGridSize);
+        coordinates.y = Mathf.RoundToInt(position.z / _unityGridSize);
+
+        return coordinates;
+    }
+
+    public Vector3 GetPositionFromCoordinates(Vector2Int coordinates)
+    {
+        Vector3 position = new Vector3();
+        position.x = coordinates.x * _unityGridSize;
+        position.z = coordinates.y * _unityGridSize;
+        return position;
     }
 
     private void InitializeGrid()

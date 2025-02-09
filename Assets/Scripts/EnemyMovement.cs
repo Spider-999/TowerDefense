@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private List<Road> _roads = new List<Road>();
+    [SerializeField] private List<Tile> _roads = new List<Tile>();
     [SerializeField] [Range(1.0f, 5.0f)] private float _enemySpeed = 1.0f;
     private Enemy _enemy;
 
@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         // and add them to the _roads list to build the level's road.
         foreach (Transform childRoad in parentRoad.transform)
         {
-            Road road = childRoad.GetComponent<Road>();
+            Tile road = childRoad.GetComponent<Tile>();
 
             if(road != null)
                 _roads.Add(road);
@@ -75,7 +75,7 @@ public class EnemyMovement : MonoBehaviour
     // Coroutine
     private IEnumerator FollowRoad()
     {
-        foreach (Road road in _roads)
+        foreach (Tile road in _roads)
         {
             // Enemy position
             Vector3 startPos = transform.position;

@@ -12,15 +12,15 @@ public class Node
 {
     #region Private attributes
     public Vector2Int GridPosition;
-    public bool IsWalkable;
+    public bool IsPlaceable;
     public bool IsExplored;
     public bool IsRoad;
     public Node NextNode;
     #endregion
 
-    public Node(Vector2Int gridPosition, bool isWalkable)
+    public Node(Vector2Int gridPosition, bool isPlaceable)
     {
         GridPosition = gridPosition;
-        IsWalkable = isWalkable;
+        IsPlaceable = isPlaceable;
     }
 }

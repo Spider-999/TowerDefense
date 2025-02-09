@@ -6,7 +6,7 @@ public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     // Limit the enemy pool size to a range between 5 and 50
-    [SerializeField] [Range(5, 50)] private int _enemyPoolSize = 5;
+    [SerializeField] [Range(0, 20)] private int _enemyPoolSize = 5;
     // Limit the spawn rate to a range between 0.5 and 5 seconds
     [SerializeField] [Range(0.5f, 5f)] private float _spawnRate = 1.5f;
     private GameObject[] _enemyPool;

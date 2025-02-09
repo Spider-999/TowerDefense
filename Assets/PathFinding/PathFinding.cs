@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,8 +32,14 @@ public class PathFinding : MonoBehaviour
         // grid manager using the start and end coordinates
         _startNode = _gridManager.Grid[_startCoordinates];
         _endNode = _gridManager.Grid[_endCoordinates];
-        BFS();
-        BuildRoad();
+        if (BFS())
+        {
+            BuildRoad();
+        }
+        else
+        {
+            Debug.Log("No road found");
+        }
     }
 
     private void ExploreNeighborNodes()
@@ -53,21 +60,21 @@ public class PathFinding : MonoBehaviour
 
         foreach (Node neighborNode in neighborNodes)
         {
-            // Check if the neighbor node has not been explored and is walkable
-            if (!_explored.ContainsKey(neighborNode.GridPosition) && neighborNode.IsWalkable)
+            // Check if the neighbor node has not been explored and is placeable
+            if (!_explored.ContainsKey(neighborNode.GridPosition) && neighborNode.IsPlaceable)
             {
+                neighborNode.NextNode = _currentSearchNode;
                 // Add the next node to the neighbor node
                 // to create a tree structure
-                neighborNode.NextNode = _currentSearchNode;
+                _explored.Add(neighborNode.GridPosition, neighborNode);
                 // Add the neighbor node to the queue
                 _frontNodes.Enqueue(neighborNode);
-                _explored.Add(neighborNode.GridPosition, neighborNode);
             }
         }
     }
 
     // Breadth First Search algortihm
-    private void BFS()
+    private bool BFS()
     {
         _frontNodes.Enqueue(_startNode);
         _explored.Add(_startCoordinates, _startNode);
@@ -81,12 +88,14 @@ public class PathFinding : MonoBehaviour
             if (_currentSearchNode.GridPosition == _endCoordinates)
             {
                 Debug.Log("Road Found");
-                break;
+                return true;
             }
         }
+
+        return false;
     }
 
-    public List<Node> BuildRoad()
+    private List<Node> BuildRoad()
     {
         List<Node> road = new List<Node>();
         Node currentNode = _endNode;

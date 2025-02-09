@@ -36,6 +36,7 @@ public class CoordinateLabeler : MonoBehaviour
         {
             DisplayCoordinates();
             UpdateTileName();
+            _label.enabled = true;
         }
 
         ToggleLabels();
@@ -44,10 +45,11 @@ public class CoordinateLabeler : MonoBehaviour
 
     void DisplayCoordinates()
     {
-        _position.x = Mathf.RoundToInt(transform.parent.position.x /
-                                       UnityEditor.EditorSnapSettings.move.x);
-        _position.y = Mathf.RoundToInt(transform.parent.position.z /
-                                       UnityEditor.EditorSnapSettings.move.z);
+        if(_gridManager == null)
+            return;
+
+        _position.x = Mathf.RoundToInt(transform.parent.position.x / _gridManager.UnityGridSize);
+        _position.y = Mathf.RoundToInt(transform.parent.position.z / _gridManager.UnityGridSize);
 
         _label.text = $"({_position.x},{_position.y})";
     }
@@ -65,11 +67,11 @@ public class CoordinateLabeler : MonoBehaviour
 
         Node node = _gridManager.GetNode(_position);
 
-        // Check if a node is found
+        // Check if a node is found in the dictionary
         if(node == null)
             return;
 
-        if (!node.IsWalkable)
+        if (!node.IsPlaceable)
         {
             _label.color = _cantPlaceTowerColor;
         }
@@ -81,7 +83,7 @@ public class CoordinateLabeler : MonoBehaviour
         {
             _label.color = _exploredRoadColor;
         }
-        else if(node.IsWalkable)
+        else
         {
             _label.color = _canPlaceTowerColor;
         }
