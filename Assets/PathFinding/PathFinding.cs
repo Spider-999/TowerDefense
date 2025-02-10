@@ -26,20 +26,20 @@ public class PathFinding : MonoBehaviour
             _grid = _gridManager.Grid;
     }
 
-    void Start()
+    private void Start()
     {
         // Get the start and end nodes from the grid dictionary in the 
         // grid manager using the start and end coordinates
         _startNode = _gridManager.Grid[_startCoordinates];
         _endNode = _gridManager.Grid[_endCoordinates];
-        if (BFS())
-        {
-            BuildRoad();
-        }
-        else
-        {
-            Debug.Log("No road found");
-        }
+        GetNewRoad();
+    }
+
+    public List<Node> GetNewRoad()
+    {
+        _gridManager.ResetNodes();
+        BFS();
+        return BuildRoad();
     }
 
     private void ExploreNeighborNodes()
@@ -76,6 +76,9 @@ public class PathFinding : MonoBehaviour
     // Breadth First Search algortihm
     private bool BFS()
     {
+        _frontNodes.Clear();
+        _explored.Clear();
+
         _frontNodes.Enqueue(_startNode);
         _explored.Add(_startCoordinates, _startNode);
 
@@ -115,5 +118,24 @@ public class PathFinding : MonoBehaviour
         // Reverse the road list to get the correct order
         road.Reverse();
         return road;
+    }
+
+    public bool WillBlockRoad(Vector2Int coordinates)
+    {
+        if(_grid.ContainsKey(coordinates))
+        {
+            bool previousState = _grid[coordinates].IsPlaceable;
+            _grid[coordinates].IsPlaceable = false;
+            List<Node> newRoad = GetNewRoad();
+            _grid[coordinates].IsPlaceable = previousState;
+
+            if(newRoad.Count <= 1)
+            {
+                GetNewRoad();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

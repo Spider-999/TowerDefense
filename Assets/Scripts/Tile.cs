@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private float _cannonSpawnY;
     [SerializeField] private bool _isPlaceable;
     private GridManager _gridManager;
+    private PathFinding _pathFinding;
     private Vector2Int _coordinates = new Vector2Int();
 
     #region Properties
@@ -21,6 +22,7 @@ public class Tile : MonoBehaviour
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
+        _pathFinding = FindObjectOfType<PathFinding>();
     }
 
     private void Start()
@@ -29,13 +31,13 @@ public class Tile : MonoBehaviour
         {
             _coordinates = _gridManager.GetCoordinatesFromPosition(transform.position);
             if (!_isPlaceable)
-                _gridManager.SetNonWalkableNode(_coordinates);
+                _gridManager.SetNonPlaceableNode(_coordinates);
         }
     }
 
     private void OnMouseDown()
     {
-        if (IsPlaceable)
+        if (_gridManager.GetNode(_coordinates).IsPlaceable && !_pathFinding.WillBlockRoad(_coordinates))
         {
             Vector3 cannonSpawnLocation = new Vector3(transform.position.x, _cannonSpawnY, transform.position.z);
             bool isPlaced;
@@ -47,7 +49,7 @@ public class Tile : MonoBehaviour
             // Make the tile non placeble if it is occupied already
             // and if the player had enough currency to place the tower
             IsPlaceable = !isPlaced;
-
+            _gridManager.SetNonPlaceableNode(_coordinates);
             // Log the tile location
             Debug.Log(transform.name);
         }

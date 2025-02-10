@@ -36,12 +36,22 @@ public class GridManager : MonoBehaviour
         InitializeGrid();
     }
 
-    public void SetNonWalkableNode(Vector2Int coordinates)
+    public void SetNonPlaceableNode(Vector2Int coordinates)
     {
         if (_grid.ContainsKey(coordinates))
         {
             // Debug.Log("Setting non placeable node at: " + coordinates);
             _grid[coordinates].IsPlaceable = false;
+        }
+    }
+
+    public void ResetNodes()
+    {
+        foreach(KeyValuePair<Vector2Int, Node> entry in _grid)
+        {
+            entry.Value.IsExplored = false;
+            entry.Value.IsRoad = false;
+            entry.Value.NextNode = null;
         }
     }
 
