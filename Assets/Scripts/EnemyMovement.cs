@@ -6,57 +6,39 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private List<Tile> _roads = new List<Tile>();
     [SerializeField] [Range(1.0f, 5.0f)] private float _enemySpeed = 1.0f;
+    private List<Node> _roads = new List<Node>();
     private Enemy _enemy;
+    private GridManager _gridManager;
+    private PathFinding _pathFinding;
 
     // This method is called when the script instance is being loaded.
-    private void Awake()
-    {
-        /* 
-         * Instead of building the path in the OnEnable method
-         * every time the object is enabled, we can build the path
-         * only once in the Awake method for more efficient resource usage.
-        */
-        FindAndBuildPath();
-    }
-
-    private void Start()
-    {
-        _enemy = GetComponent<Enemy>();
-    }
-
-    // This method is called when the object becomes enabled and active.
     private void OnEnable()
     {
+        FindAndBuildPath();
         ReturnToBeginning();
         StartCoroutine(FollowRoad());
+    }
+
+    private void Awake()
+    {
+        _enemy = GetComponent<Enemy>();
+        _gridManager = FindObjectOfType<GridManager>();
+        _pathFinding = FindObjectOfType<PathFinding>();
     }
 
     private void FindAndBuildPath()
     {
         // Clear the existing roads
         _roads.Clear();
-
-        // Get the parent of object of the roads with the tag "Road"
-        GameObject parentRoad = GameObject.FindGameObjectWithTag("Road");
-
-        // Loop through all the children of the parentRoad
-        // and add them to the _roads list to build the level's road.
-        foreach (Transform childRoad in parentRoad.transform)
-        {
-            Tile road = childRoad.GetComponent<Tile>();
-
-            if(road != null)
-                _roads.Add(road);
-        }
+        _roads = _pathFinding.GetNewRoad();
     }
 
     private void ReturnToBeginning()
     {
-        // Get the first road from the road list.
-        Vector3 firstRoad = _roads.First().transform.position;
-
+        // Get the first road from the gridmanager
+        Vector3 firstRoad = _gridManager.GetPositionFromCoordinates(_pathFinding.StartCoordinates);
+        
         // Place the enemy at the beginning of the road.
         // Keep the y position of the enemy the same.
         transform.position = new Vector3(firstRoad.x, transform.position.y, firstRoad.z);
@@ -75,15 +57,13 @@ public class EnemyMovement : MonoBehaviour
     // Coroutine
     private IEnumerator FollowRoad()
     {
-        foreach (Tile road in _roads)
+        for(int i = 0; i < _roads.Count; i++)
         {
             // Enemy position
             Vector3 startPos = transform.position;
             // Give the end position the start position's y
             // because we dont want to interpolate on the y axis.
-            Vector3 endPos = new Vector3(road.transform.position.x, 
-                                         startPos.y, 
-                                         road.transform.position.z);
+            Vector3 endPos = _gridManager.GetPositionFromCoordinates(_roads[i].GridPosition);
             float time = 0.0f;
 
 

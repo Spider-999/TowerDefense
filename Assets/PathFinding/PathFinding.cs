@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PathFinding : MonoBehaviour
 {
+    #region Private attributes
     [SerializeField] private Vector2Int _startCoordinates;
     [SerializeField] private Vector2Int _endCoordinates;
     private Node _startNode;
@@ -17,21 +18,36 @@ public class PathFinding : MonoBehaviour
     private Vector2Int[] _directions = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };
     private GridManager _gridManager;
     private Dictionary<Vector2Int, Node> _grid = new Dictionary<Vector2Int, Node>();
+    #endregion
+
+    #region Properties
+    public Vector2Int StartCoordinates
+    {
+        get => _startCoordinates;
+    }
+
+    public Vector2Int EndCoordinates
+    {
+        get => _endCoordinates;
+    }
+    #endregion
 
     private void Awake()
     {
         _gridManager = FindObjectOfType<GridManager>();
 
         if (_gridManager != null)
+        {
             _grid = _gridManager.Grid;
+            // Get the start and end nodes from the grid dictionary in the 
+            // grid manager using the start and end coordinates
+            _startNode = _grid[_startCoordinates];
+            _endNode = _grid[_endCoordinates];
+        }
     }
 
     private void Start()
     {
-        // Get the start and end nodes from the grid dictionary in the 
-        // grid manager using the start and end coordinates
-        _startNode = _gridManager.Grid[_startCoordinates];
-        _endNode = _gridManager.Grid[_endCoordinates];
         GetNewRoad();
     }
 
@@ -76,6 +92,9 @@ public class PathFinding : MonoBehaviour
     // Breadth First Search algortihm
     private bool BFS()
     {
+        _startNode.IsPlaceable = true;
+        _endNode.IsPlaceable = true;
+
         _frontNodes.Clear();
         _explored.Clear();
 
